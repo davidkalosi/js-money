@@ -108,6 +108,8 @@ describe('Money', function () {
        expect(results[1].amount).to.equal(333);
        expect(results[1].currency).to.equal(Money.EUR);
        expect(results[2].amount).to.equal(333);    
-       expect(results[2].currency).to.equal(Money.EUR);
+       expect(results[2].currency).to.equal(Money.EUR);             
     });
+    
+    
 });
