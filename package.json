@@ -1,7 +1,7 @@
 {
     "name": "js-money",
     "description": "",
-    "version": "0.0.1",    
+    "version": "0.0.2",    
     "main": "./lib",
     "author": {
         "name": "David Kalosi",
@@ -13,10 +13,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/YOUR_LOGIN/JsMoney.git"
+        "url": "git://github.com/davidkalosi/js-money.git"
     },
     "bugs": {
-        "url": "http://github.com/YOUR_LOGIN/JsMoney/issues"
+        "url": "https://github.com/davidkalosi/js-money/issues"
     },
     "dependencies": {
         "lodash": "*"
