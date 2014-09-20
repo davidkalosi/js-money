@@ -1,0 +1,31 @@
+{
+    "name": "js-money",
+    "description": "",
+    "version": "0.0.1",    
+    "main": "./lib",
+    "author": {
+        "name": "David Kalosi",
+        "email": "david.kalosi@gmail.com"
+    },
+    "keywords": ["money", "javascript", "currency"],
+    "licenses": {
+        "type": "MIT"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/YOUR_LOGIN/JsMoney.git"
+    },
+    "bugs": {
+        "url": "http://github.com/YOUR_LOGIN/JsMoney/issues"
+    },
+    "dependencies": {
+        "lodash": "*"
+    },
+    "devDependencies": {
+        "mocha": "1.x.x",
+        "chai": "1.x.x"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js"
+    }
+}
