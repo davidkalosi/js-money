@@ -10,9 +10,14 @@ JS Money is a JavaScript implementation of Martin Fowlers [Money pattern](http:/
     $ npm install js-money
 
 ## Usage
+```javascript
+var Money = require('js-money');
 
-    var Money = require('js-money');
-    
+var fiveEur = new Money(500, Money.EUR); // 5 EUR
+var tenEur = fiveEur.multiply(2); // 10 EUR
+
+var shares = tenEur.allocate(1,1,1); // [3.34,3.33,3.33]
+```
 ## Tests
 
     $ npm install
