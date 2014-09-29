@@ -1,7 +1,9 @@
 # JS Money
 
+[![NPM version][npm-image]][npm-url]
 [![Build](https://travis-ci.org/davidkalosi/js-money.png)](https://travis-ci.org/davidkalosi/js-money)
 [![Coverage](https://img.shields.io/coveralls/davidkalosi/js-money.svg)](https://coveralls.io/r/davidkalosi/js-money)
+[![Downloads][downloads-image]][npm-url]
 
 JS Money is a JavaScript implementation of Martin Fowlers [Money pattern](http://martinfowler.com/eaaCatalog/money.html).
 
@@ -118,3 +120,8 @@ fiveEur.compare(fileDollars); // throw Error
 [The MIT License](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2014 David Kalosi [http://davidkalosi.com/](http://davidkalosi.com/)
+
+[downloads-image]: http://img.shields.io/npm/dm/js-money.svg
+
+[npm-url]: https://npmjs.org/package/js-money
+[npm-image]: http://img.shields.io/npm/v/js-money.svg
