@@ -11,18 +11,38 @@ var Money = require('../lib/index');
 
 describe('Money', function () {
 
-    it('should create a new instance from integer', function () {
+    it('should create a new instance from integer', function () {        
         var money = new Money(1000, Money.EUR);
 
         expect(money.amount).to.equal(1000);
-        expect(money.currency).to.equal(Money.EUR);
+        expect(money.currency).to.equal('EUR');
     });
     
     it('should create a new instance from decimal', function () {
         var money = new Money(10.42, Money.EUR);
 
         expect(money.amount).to.equal(1042);
-        expect(money.currency).to.equal(Money.EUR);
+        expect(money.currency).to.equal('EUR');
+    });
+    
+    it('should create a new instance from string currency', function () {
+        var money = new Money(10.42, 'EUR');
+
+        expect(money.amount).to.equal(1042);
+        expect(money.currency).to.equal('EUR');
+    });
+    
+    it('should detect invalid currency', function () {
+        expect(function () {
+            new Money(10, 'XYZ')
+        }).to.throw(TypeError);
+    });
+    
+    it('should serialize correctly', function() {
+        var money = new Money(10.42, Money.EUR);
+        
+        expect(money.amount).to.be.a.number;
+        expect(money.currency).to.be.a.string;
     });
     
     it('should check for decimal precision', function() {      
@@ -38,7 +58,7 @@ describe('Money', function () {
         var result = first.add(second);
 
         expect(result.amount).to.equal(1500);
-        expect(result.currency).to.equal(Money.EUR);
+        expect(result.currency).to.equal('EUR');
 
         expect(first.amount).to.equal(1000);
         expect(second.amount).to.equal(500);
@@ -81,7 +101,7 @@ describe('Money', function () {
         var result = subject.subtract(new Money(250, Money.EUR));
         
         expect(result.amount).to.equal(750);
-        expect(result.currency).to.equal(Money.EUR);
+        expect(result.currency).to.equal('EUR');
     });
     
     it('should multiply correctly', function() {
@@ -104,11 +124,11 @@ describe('Money', function () {
        
        expect(results.length).to.equal(3);
        expect(results[0].amount).to.equal(334);
-       expect(results[0].currency).to.equal(Money.EUR);
+       expect(results[0].currency).to.equal('EUR');
        expect(results[1].amount).to.equal(333);
-       expect(results[1].currency).to.equal(Money.EUR);
+       expect(results[1].currency).to.equal('EUR');
        expect(results[2].amount).to.equal(333);    
-       expect(results[2].currency).to.equal(Money.EUR);             
+       expect(results[2].currency).to.equal('EUR');             
     });
     
     
