@@ -1,0 +1,28 @@
+{
+    "name": "js-money",
+    "description": "JavaScript implementation of the Money value object.",
+    "version": "0.1.0",    
+    "main": "./lib",
+    "author": {
+        "name": "David Kalosi",
+        "email": "david.kalosi@gmail.com"
+    },
+    "keywords": ["money", "javascript", "currency"],
+    "licenses": {
+        "type": "MIT"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/davidkalosi/js-money.git"
+    },
+    "bugs": {
+        "url": "https://github.com/davidkalosi/js-money/issues"
+    },
+    "dependencies": {
+        "lodash": "*"
+    },
+    "devDependencies": {
+        "mocha": "1.x.x",
+        "chai": "1.x.x"
+    }
+}
