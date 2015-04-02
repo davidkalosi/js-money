@@ -9,7 +9,10 @@ JS Money is a JavaScript implementation of Martin Fowlers [Money pattern](http:/
 
 ## Install
 
+The package is available through npm and bower.
+
     $ npm install js-money
+    $ bower install js-money
 
 ## Usage
 
