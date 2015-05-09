@@ -31,7 +31,22 @@ describe('Money', function () {
         expect(money.amount).to.equal(1042);
         expect(money.currency).to.equal('EUR');
     });
-    
+
+    it('should create a new instance from object', function () {
+        var money = new Money({amount: 11.51, currency: 'EUR'});
+
+        expect(money.amount).to.equal(1151);
+        expect(money.currency).to.equal('EUR');
+    });
+
+    it('should create a new instance from object with currenct object', function () {
+        var money = new Money({amount: 11.51, currency: Money.EUR});
+
+        expect(money.amount).to.equal(1151);
+        expect(money.currency).to.equal('EUR');
+    });
+
+
     it('should detect invalid currency', function () {
         expect(function () {
             new Money(10, 'XYZ')

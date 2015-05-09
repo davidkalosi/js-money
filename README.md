@@ -24,7 +24,11 @@ var Money = require('js-money');
 
 ### Creating a new instance
 
-To create a new instance of Money you need to pass 2 parameters - the amount and the currency.
+There are multiple options of what to pass into the constructor to create a new Money instance:
+* amount as number, currency as string
+* amount as number, currency as object
+* object with amount and currency fields
+
 Amounts can be supplied either as integers or decimal numbers.
 
 Instances of Money are immutable and each arithmetic operation will return a new instance of the object.
@@ -34,7 +38,8 @@ When using decimals the library will allow only decimals with the precision allo
 ```javascript
 
 var fiveEur = new Money(500, Money.EUR);
-var someDollars = new Money(15.25, Money.USD);
+var someDollars = new Money(15.25, 'USD');
+var tenDollars = new Money({amount: 100, currency: Money.USD});
 
 // the following will fail and throw an Error since USD allows for 2 decimals
 var moreDollars = new Money(15.3456, Money.USD); // 
