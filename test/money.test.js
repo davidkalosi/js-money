@@ -14,8 +14,18 @@ describe('Money', function () {
     it('should create a new instance from integer', function () {        
         var money = new Money(1000, Money.EUR);
 
-        expect(money.amount).to.equal(1000);
+        expect(money.amount).to.equal(100000);
         expect(money.currency).to.equal('EUR');
+    });
+
+        it('decimals should be consistent', function () {        
+        var money = new Money(1000, Money.EUR);
+        var otherMoney = new Money(1000.0, Money.EUR);
+        var thirdMoney = new Money(1000.00, Money.EUR);
+
+        expect(money.amount).to.equal(100000);
+        expect(otherMoney.amount).to.equal(100000);
+        expect(thirdMoney.amount).to.equal(100000);
     });
     
     it('should create a new instance from decimal', function () {
@@ -79,11 +89,11 @@ describe('Money', function () {
 
         var result = first.add(second);
 
-        expect(result.amount).to.equal(1500);
+        expect(result.amount).to.equal(150000);
         expect(result.currency).to.equal('EUR');
 
-        expect(first.amount).to.equal(1000);
-        expect(second.amount).to.equal(500);
+        expect(first.amount).to.equal(100000);
+        expect(second.amount).to.equal(50000);
     });
 
     it('should not add different currencies', function () {
@@ -122,7 +132,7 @@ describe('Money', function () {
         var subject = new Money(1000, Money.EUR);
         var result = subject.subtract(new Money(250, Money.EUR));
         
-        expect(result.amount).to.equal(750);
+        expect(result.amount).to.equal(75000);
         expect(result.currency).to.equal('EUR');
     });
     
@@ -130,14 +140,14 @@ describe('Money', function () {
         var subject = new Money(1000, Money.EUR);
         var result = subject.multiply(10.5);
         
-        expect(result.amount).to.equal(10500);
+        expect(result.amount).to.equal(1050000);
     });
     
     it('should divide correctly', function() {
         var subject = new Money(1000, Money.EUR);
         var result = subject.divide(2.234);
         
-        expect(result.amount).to.equal(448);
+        expect(result.amount).to.equal(44763);
     });
     
     it('should allocate correctly', function() {
@@ -145,11 +155,11 @@ describe('Money', function () {
        var results = subject.allocate([1,1,1]);
        
        expect(results.length).to.equal(3);
-       expect(results[0].amount).to.equal(334);
+       expect(results[0].amount).to.equal(33334);
        expect(results[0].currency).to.equal('EUR');
-       expect(results[1].amount).to.equal(333);
+       expect(results[1].amount).to.equal(33333);
        expect(results[1].currency).to.equal('EUR');
-       expect(results[2].amount).to.equal(333);    
+       expect(results[2].amount).to.equal(33333);    
        expect(results[2].currency).to.equal('EUR');             
     });
 
