@@ -19,4 +19,7 @@ describe('js-money', function() {
         expect(Money.EUR).to.be.a('object');
     });
 
+    it('should export factory methods', function() {
+        expect(Money.fromDecimal).to.be.a('function');
+    });
 });

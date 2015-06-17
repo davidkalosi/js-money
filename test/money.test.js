@@ -18,36 +18,42 @@ describe('Money', function () {
         expect(money.currency).to.equal('EUR');
     });
     
-    it('should create a new instance from decimal', function () {
-        var money = new Money(10.42, Money.EUR);
-
-        expect(money.amount).to.equal(1042);
-        expect(money.currency).to.equal('EUR');
+    it('should not create a new instance from decimal', function () {
+        expect(function () {
+            new Money(10.42, Money.EUR);
+        }).to.throw(TypeError);
     });
     
     it('should create a new instance from string currency', function () {
-        var money = new Money(10.42, 'EUR');
+        var money = new Money(1042, 'EUR');
 
         expect(money.amount).to.equal(1042);
         expect(money.currency).to.equal('EUR');
     });
 
-    it('should create a new instance from object', function () {
-        var money = new Money({amount: 11.51, currency: 'EUR'});
+    it('should create a new instance from integer object', function () {
+        var money = Money.fromInteger({amount: 1151, currency: 'EUR'});
+
+        expect(money.amount).to.equal(1151);
+        expect(money.currency).to.equal('EUR');
+    });
+
+    it('should create a new instance from integer', function () {
+        var money = Money.fromInteger(1151,Money.EUR);
 
         expect(money.amount).to.equal(1151);
         expect(money.currency).to.equal('EUR');
     });
 
     it('should create a new instance with correct decimals from object', function () {
-        var money = new Money({amount: 11.5, currency: 'EUR'});
+        var money = Money.fromDecimal({amount: 11.5, currency: 'EUR'});
 
         expect(money.amount).to.equal(1150);
         expect(money.currency).to.equal('EUR');
     });
 
     it('should create a new instance from object with currenct object', function () {
-        var money = new Money({amount: 11.51, currency: Money.EUR});
+        var money = Money.fromDecimal({amount: 11.51, currency: Money.EUR});
 
         expect(money.amount).to.equal(1151);
         expect(money.currency).to.equal('EUR');
@@ -61,7 +67,7 @@ describe('Money', function () {
     });
     
     it('should serialize correctly', function() {
-        var money = new Money(10.42, Money.EUR);
+        var money = new Money(1042, Money.EUR);
         
         expect(money.amount).to.be.a.number;
         expect(money.currency).to.be.a.string;
