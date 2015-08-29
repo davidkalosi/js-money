@@ -45,6 +45,13 @@ describe('Money', function () {
         expect(money.currency).to.equal('EUR');
     });
 
+    it('should create a new instance from zero integer', function () {
+        var money = Money.fromInteger(0,Money.EUR);
+
+        expect(money.amount).to.equal(0);
+        expect(money.currency).to.equal('EUR');
+    });
+
     it('should create a new instance with correct decimals from object', function () {
         var money = Money.fromDecimal({amount: 11.5, currency: 'EUR'});
 
