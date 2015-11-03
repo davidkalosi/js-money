@@ -191,6 +191,15 @@ describe('Money', function () {
        expect(results[2].currency).to.equal('EUR');             
     });
 
+    it('should allocate correctly with 0% ratio', function() {
+        var subject = new Money(1001, Money.EUR);
+        var results = subject.allocate([0, .5, .5]);
+
+        expect(results[0].amount).to.equal(0);
+        expect(results[1].amount).to.equal(501);
+        expect(results[2].amount).to.equal(500);
+    });
+
     it('zero check works correctly', function() {
         var subject = new Money(1000, 'EUR');
         var subject1 = new Money(0, 'EUR');
