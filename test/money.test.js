@@ -10,7 +10,6 @@
 var Money = require('../lib/index');
 
 describe('Money', function () {
-
     it('should create a new instance from integer', function () {        
         var money = new Money(1000, Money.EUR);
 
@@ -22,6 +21,31 @@ describe('Money', function () {
         expect(function () {
             new Money(10.42, Money.EUR);
         }).to.throw(TypeError);
+    });
+
+    it('should create a new instance from decimal using `.fromDecimal()`', function () {
+        var money = Money.fromDecimal(10.01, Money.EUR);
+        var money1 = Money.fromDecimal(10.1, Money.EUR);
+        var money2 = Money.fromDecimal(10, Money.EUR);
+
+        expect(money.amount).to.equal(1001);
+        expect(money.currency).to.equal('EUR');
+        expect(money1.amount).to.equal(1010);
+        expect(money2.amount).to.equal(1000);
+    });
+
+    it('should create a new instance from decimal string using `.fromDecimal()`', function () {
+        var money = Money.fromDecimal('10.01', Money.EUR);
+        var money1 = Money.fromDecimal('10', Money.EUR);
+
+        expect(money.amount).to.equal(1001);
+        expect(money1.amount).to.equal(1000);
+    });
+
+    it('should not create a new instance from decimal using `.fromDecimal()` if too many decimal places', function () {
+        expect(function () {
+            Money.fromDecimal(10.421, Money.EUR);
+        }).to.throw(Error);
     });
     
     it('should create a new instance from string currency', function () {
@@ -65,7 +89,6 @@ describe('Money', function () {
         expect(money.amount).to.equal(1151);
         expect(money.currency).to.equal('EUR');
     });
-
 
     it('should detect invalid currency', function () {
         expect(function () {
@@ -141,16 +164,18 @@ describe('Money', function () {
     
     it('should multiply correctly', function() {
         var subject = new Money(1000, Money.EUR);
-        var result = subject.multiply(10.5);
-        
-        expect(result.amount).to.equal(10500);
+
+        expect(subject.multiply(1.2234).amount).to.equal(1223);
+        expect(subject.multiply(1.2234, Math.ceil).amount).to.equal(1224);
+        expect(subject.multiply(1.2234, Math.floor).amount).to.equal(1223);
     });
     
     it('should divide correctly', function() {
         var subject = new Money(1000, Money.EUR);
-        var result = subject.divide(2.234);
-        
-        expect(result.amount).to.equal(448);
+
+        expect(subject.divide(2.234).amount).to.equal(448);
+        expect(subject.divide(2.234, Math.ceil).amount).to.equal(448);
+        expect(subject.divide(2.234, Math.floor).amount).to.equal(447);
     });
     
     it('should allocate correctly', function() {
@@ -189,5 +214,26 @@ describe('Money', function () {
         expect(subject.isNegative()).to.be.false;
         expect(subject1.isNegative()).to.be.true;
     });
-    
+
+    it('should allow to extract the amount as a decimal', function () {
+        var subject = new Money(1000, 'EUR');
+        var subject1 = new Money(1010, 'EUR');
+        var subject2 = Money.fromDecimal(10.01, 'EUR');
+
+        expect(subject.toDecimal()).to.equal(10);
+        expect(subject1.toDecimal()).to.equal(10.1);
+        expect(subject2.toDecimal()).to.equal(10.01);
+    });
+
+    it('should allow to be concatenated with a string', function () {
+        var subject = new Money(1000, 'EUR');
+
+        expect('' + subject).to.equal('10.00');
+    });
+
+    it('should allow to be stringified as JSON', function () {
+        var subject = new Money(1000, 'EUR');
+
+        expect(JSON.stringify({ foo: subject })).to.equal('{"foo":"10.00"}');
+    });
 });

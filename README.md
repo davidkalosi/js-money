@@ -27,7 +27,7 @@ var Money = require('js-money');
 There are multiple options of what to pass into the constructor to create a new Money instance:
 * amount as number, currency as string
 * amount as number, currency as object
-* object with amount and currency fields
+* object with amount and currency fields (only with `fromInteger` and `fromDecimal` methods)
 
 Amounts can be supplied either as integers or decimal numbers.
 
@@ -36,13 +36,12 @@ Instances of Money are immutable and each arithmetic operation will return a new
 When using decimals the library will allow only decimals with the precision allowed by the currencies smallest unit.
 
 ```javascript
-
 var fiveEur = new Money(500, Money.EUR);
-var someDollars = new Money(15.25, 'USD');
-var tenDollars = new Money({amount: 100, currency: Money.USD});
+var tenDollars = Money.fromInteger({ amount: 1000, currency: Money.USD });
+var someDollars = Money.fromDecimal(15.25, 'USD');
 
 // the following will fail and throw an Error since USD allows for 2 decimals
-var moreDollars = new Money(15.3456, Money.USD); // 
+var moreDollars = Money.fromDecimal(15.3456, Money.USD);
 ```
 
 The currency object hold the following properties
@@ -67,16 +66,18 @@ Arithmetic operations involving multiple objects are only possible on instances 
 var fiveEur = new Money(500, Money.EUR); // 5 EUR
 
 // add
-var result = fiveEur.add(250, Money.EUR); // 7.50 EUR
+fiveEur.add(250, Money.EUR); // 7.50 EUR
 
 // subtract 
-var result = fiveEur.subtract(470, Money.EUR); // 0.30 EUR
+fiveEur.subtract(470, Money.EUR); // 0.30 EUR
 
 // multiply
-var result = fiveEur.multiply(1.2); // 6 EUR
+fiveEur.multiply(1.2345); // 6.17 EUR
+fiveEur.multiply(1.2345, Math.ceil); // 6.18 EUR
 
 // divide 
-var result = fiveEur.divide(2); // 2.50 EUR
+fiveEur.divide(2.3456); // 2.13 EUR
+fiveEur.divide(2.3456, Math.ceil); // 2.14 EUR
 ```
 
 ### Allocating funds
@@ -88,7 +89,7 @@ var tenEur = new Money(1000, Money.EUR);
 
 // divide 10 EUR into 3 parts
 var shares = tenEur.allocate([1,1,1]); 
-// returns an array of money worth [334,333,333]
+// returns an array of Money instances worth [334,333,333]
 
 // split 5 EUR 70/30
 var fiveEur = new Money(500, Money.EUR);
