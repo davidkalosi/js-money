@@ -1,7 +1,7 @@
 {
     "name": "js-money",
     "description": "JavaScript implementation of the Money value object.",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "main": "./lib",
     "author": {
         "name": "David Kalosi",
