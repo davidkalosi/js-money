@@ -117,6 +117,11 @@ sevenEur.compare(fiveEur); // return 1
 fiveEur.compare(anotherFiveEur); // return 0
 
 fiveEur.compare(fileDollars); // throw Error
+
+fiveEur.greaterThan(sevenEur); // return false
+fiveEur.greaterThanOrEqual(sevenEur); // return false
+fiveEur.lessThan(sevenEur); // return true
+fiveEur.lessThanOrEqual(fiveEur); // return true
 ```
 
 ## Tests
