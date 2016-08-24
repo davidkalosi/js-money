@@ -19,7 +19,7 @@
         "url": "https://github.com/davidkalosi/js-money/issues"
     },
     "dependencies": {
-        "lodash": "3.x.x"
+        "lodash": "4.x.x"
     },
     "devDependencies": {
         "mocha": "1.x.x",
