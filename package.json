@@ -8,6 +8,7 @@
         "email": "david.kalosi@gmail.com"
     },
     "keywords": ["money", "javascript", "currency"],
+    "files": ["lib"],
     "licenses": {
         "type": "MIT"
     },
