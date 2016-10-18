@@ -263,4 +263,38 @@ describe('Money', function () {
         expect(subject.getAmount()).to.equal(1000);
         expect(subject.getCurrency()).to.equal('EUR');
     });
+
+    it('should convert from decimal per currency', function () {
+        var euro = Money.fromDecimal(123.45, 'EUR');
+        var forint = Money.fromDecimal(123.45, 'HUF');
+        var yen = Money.fromDecimal(12345, 'JPY');
+        var dinar = Money.fromDecimal(12.345, 'BHD');
+
+        expect(euro.amount).to.equal(12345);
+        expect(forint.amount).to.equal(12345);
+        expect(yen.amount).to.equal(12345);
+        expect(dinar.amount).to.equal(12345);
+    });
+
+    it('should convert to decimal per currency', function () {
+        var euro = new Money(12345, 'EUR');
+        var forint = new Money(12345, 'HUF');
+        var yen = new Money(12345, 'JPY');
+        var dinar = new Money(12345, 'BHD');
+
+        expect(euro.toDecimal()).to.equal(123.45);
+        expect(forint.toDecimal()).to.equal(123.45);
+        expect(yen.toDecimal()).to.equal(12345);
+        expect(dinar.toDecimal()).to.equal(12.345);
+    });
+
+    it('should convert from decimal when using less than maximum decimal digits', function () {
+        var euro = Money.fromDecimal(123, 'EUR');
+        var forint = Money.fromDecimal(123.4, 'HUF');
+        var dinar = Money.fromDecimal(12.3, 'BHD');
+
+        expect(euro.amount).to.equal(12300);
+        expect(forint.amount).to.equal(12340);
+        expect(dinar.amount).to.equal(12300);
+    });
 });
