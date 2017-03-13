@@ -48,6 +48,27 @@ describe('Money', function () {
         }).to.throw(Error);
     });
 
+    it('should create a new instance from decimal using `.fromDecimalRounded()` even if too many decimal places', function () {
+        var money = Money.fromDecimalRounded(10.01, Money.EUR, 'ceil');
+        var money1 = Money.fromDecimalRounded({amount: 10.01, currency: 'EUR'}, Math.ceil);
+        var money2 = Money.fromDecimalRounded(10.0101, Money.EUR, Math.ceil);
+        var money3 = Money.fromDecimalRounded(10.0199, Money.EUR, Math.ceil);
+        var money4 = Money.fromDecimalRounded(10.0199, Money.EUR, Math.floor);
+        var money5 = Money.fromDecimalRounded(10.0199, Money.EUR, Math.round);
+        var money6 = Money.fromDecimalRounded(10.0199, Money.EUR, function (amount) {
+            return Math.round(amount)
+        });
+
+        expect(money.amount).to.equal(1001);
+        expect(money.currency).to.equal('EUR');
+        expect(money1.amount).to.equal(1001);
+        expect(money2.amount).to.equal(1002);
+        expect(money3.amount).to.equal(1002);
+        expect(money4.amount).to.equal(1001);
+        expect(money5.amount).to.equal(1002);
+        expect(money6.amount).to.equal(1002);
+    });
+
     it('should create a new instance from string currency', function () {
         var money = new Money(1042, 'EUR');
 
