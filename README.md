@@ -66,10 +66,10 @@ Arithmetic operations involving multiple objects are only possible on instances 
 var fiveEur = new Money(500, Money.EUR); // 5 EUR
 
 // add
-fiveEur.add(250, Money.EUR); // 7.50 EUR
+fiveEur.add(new Money(250, Money.EUR)); // 7.50 EUR
 
 // subtract 
-fiveEur.subtract(470, Money.EUR); // 0.30 EUR
+fiveEur.subtract(new Money(470, Money.EUR)); // 0.30 EUR
 
 // multiply
 fiveEur.multiply(1.2345); // 6.17 EUR
@@ -117,6 +117,11 @@ sevenEur.compare(fiveEur); // return 1
 fiveEur.compare(anotherFiveEur); // return 0
 
 fiveEur.compare(fileDollars); // throw Error
+
+fiveEur.greaterThan(sevenEur); // return false
+fiveEur.greaterThanOrEqual(sevenEur); // return false
+fiveEur.lessThan(sevenEur); // return true
+fiveEur.lessThanOrEqual(fiveEur); // return true
 ```
 
 ## Tests
