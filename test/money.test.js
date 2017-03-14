@@ -48,6 +48,27 @@ describe('Money', function () {
         }).to.throw(Error);
     });
 
+    it('should create a new instance from decimal using `.fromDecimalRounded()` even if too many decimal places', function () {
+        var money = Money.fromDecimalRounded(10.01, Money.EUR, 'ceil');
+        var money1 = Money.fromDecimalRounded({amount: 10.01, currency: 'EUR'}, Math.ceil);
+        var money2 = Money.fromDecimalRounded(10.0101, Money.EUR, Math.ceil);
+        var money3 = Money.fromDecimalRounded(10.0199, Money.EUR, Math.ceil);
+        var money4 = Money.fromDecimalRounded(10.0199, Money.EUR, Math.floor);
+        var money5 = Money.fromDecimalRounded(10.0199, Money.EUR, Math.round);
+        var money6 = Money.fromDecimalRounded(10.0199, Money.EUR, function (amount) {
+            return Math.round(amount)
+        });
+
+        expect(money.amount).to.equal(1001);
+        expect(money.currency).to.equal('EUR');
+        expect(money1.amount).to.equal(1001);
+        expect(money2.amount).to.equal(1002);
+        expect(money3.amount).to.equal(1002);
+        expect(money4.amount).to.equal(1001);
+        expect(money5.amount).to.equal(1002);
+        expect(money6.amount).to.equal(1002);
+    });
+
     it('should create a new instance from string currency', function () {
         var money = new Money(1042, 'EUR');
 
@@ -152,6 +173,26 @@ describe('Money', function () {
         expect(subject.compare(new Money(1500, Money.EUR))).to.equal(-1);
         expect(subject.compare(new Money(500, Money.EUR))).to.equal(1);
         expect(subject.compare(new Money(1000, Money.EUR))).to.equal(0);
+
+        expect(function () {
+            subject.compare(new Money(1500, Money.USD));
+        }).to.throw(Error, 'Different currencies');
+
+        expect(subject.greaterThan(new Money(1500, Money.EUR))).to.equal(false);
+        expect(subject.greaterThan(new Money(500, Money.EUR))).to.equal(true);
+        expect(subject.greaterThan(new Money(1000, Money.EUR))).to.equal(false);
+
+        expect(subject.greaterThanOrEqual(new Money(1500, Money.EUR))).to.equal(false);
+        expect(subject.greaterThanOrEqual(new Money(500, Money.EUR))).to.equal(true);
+        expect(subject.greaterThanOrEqual(new Money(1000, Money.EUR))).to.equal(true);
+
+        expect(subject.lessThan(new Money(1500, Money.EUR))).to.equal(true);
+        expect(subject.lessThan(new Money(500, Money.EUR))).to.equal(false);
+        expect(subject.lessThan(new Money(1000, Money.EUR))).to.equal(false);
+
+        expect(subject.lessThanOrEqual(new Money(1500, Money.EUR))).to.equal(true);
+        expect(subject.lessThanOrEqual(new Money(500, Money.EUR))).to.equal(false);
+        expect(subject.lessThanOrEqual(new Money(1000, Money.EUR))).to.equal(true);
     });
 
     it('should subtract same currencies correctly', function() {
@@ -235,5 +276,46 @@ describe('Money', function () {
         var subject = new Money(1000, 'EUR');
 
         expect(JSON.stringify({ foo: subject })).to.equal('{"foo":{"amount":1000,"currency":"EUR"}}');
+    });
+
+    it('should return the amount/currency represented by object', function () {
+        var subject = new Money(1000, 'EUR');
+
+        expect(subject.getAmount()).to.equal(1000);
+        expect(subject.getCurrency()).to.equal('EUR');
+    });
+
+    it('should convert from decimal per currency', function () {
+        var euro = Money.fromDecimal(123.45, 'EUR');
+        var forint = Money.fromDecimal(123.45, 'HUF');
+        var yen = Money.fromDecimal(12345, 'JPY');
+        var dinar = Money.fromDecimal(12.345, 'BHD');
+
+        expect(euro.amount).to.equal(12345);
+        expect(forint.amount).to.equal(12345);
+        expect(yen.amount).to.equal(12345);
+        expect(dinar.amount).to.equal(12345);
+    });
+
+    it('should convert to decimal per currency', function () {
+        var euro = new Money(12345, 'EUR');
+        var forint = new Money(12345, 'HUF');
+        var yen = new Money(12345, 'JPY');
+        var dinar = new Money(12345, 'BHD');
+
+        expect(euro.toDecimal()).to.equal(123.45);
+        expect(forint.toDecimal()).to.equal(123.45);
+        expect(yen.toDecimal()).to.equal(12345);
+        expect(dinar.toDecimal()).to.equal(12.345);
+    });
+
+    it('should convert from decimal when using less than maximum decimal digits', function () {
+        var euro = Money.fromDecimal(123, 'EUR');
+        var forint = Money.fromDecimal(123.4, 'HUF');
+        var dinar = Money.fromDecimal(12.3, 'BHD');
+
+        expect(euro.amount).to.equal(12300);
+        expect(forint.amount).to.equal(12340);
+        expect(dinar.amount).to.equal(12300);
     });
 });

@@ -1,13 +1,14 @@
 {
     "name": "js-money",
     "description": "JavaScript implementation of the Money value object.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "./lib",
     "author": {
         "name": "David Kalosi",
         "email": "david.kalosi@gmail.com"
     },
     "keywords": ["money", "javascript", "currency"],
+    "files": ["lib"],
     "licenses": {
         "type": "MIT"
     },
@@ -19,7 +20,7 @@
         "url": "https://github.com/HotelQuickly/js-money/issues"
     },
     "dependencies": {
-        "lodash": "3.x.x"
+        "lodash": "4.x.x"
     },
     "devDependencies": {
         "mocha": "1.x.x",

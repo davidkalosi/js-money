@@ -39,6 +39,7 @@ When using decimals the library will allow only decimals with the precision allo
 var fiveEur = new Money(500, Money.EUR);
 var tenDollars = Money.fromInteger({ amount: 1000, currency: Money.USD });
 var someDollars = Money.fromDecimal(15.25, 'USD');
+var someMoreDollars = Money.fromDecimalRounded(15.12345, 'USD', Math.ceil);
 
 // the following will fail and throw an Error since USD allows for 2 decimals
 var moreDollars = Money.fromDecimal(15.3456, Money.USD);
@@ -66,10 +67,10 @@ Arithmetic operations involving multiple objects are only possible on instances 
 var fiveEur = new Money(500, Money.EUR); // 5 EUR
 
 // add
-fiveEur.add(250, Money.EUR); // 7.50 EUR
+fiveEur.add(new Money(250, Money.EUR)); // 7.50 EUR
 
 // subtract 
-fiveEur.subtract(470, Money.EUR); // 0.30 EUR
+fiveEur.subtract(new Money(470, Money.EUR)); // 0.30 EUR
 
 // multiply
 fiveEur.multiply(1.2345); // 6.17 EUR
@@ -117,6 +118,11 @@ sevenEur.compare(fiveEur); // return 1
 fiveEur.compare(anotherFiveEur); // return 0
 
 fiveEur.compare(fileDollars); // throw Error
+
+fiveEur.greaterThan(sevenEur); // return false
+fiveEur.greaterThanOrEqual(sevenEur); // return false
+fiveEur.lessThan(sevenEur); // return true
+fiveEur.lessThanOrEqual(fiveEur); // return true
 ```
 
 ## Tests
