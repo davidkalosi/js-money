@@ -39,6 +39,7 @@ When using decimals the library will allow only decimals with the precision allo
 var fiveEur = new Money(500, Money.EUR);
 var tenDollars = Money.fromInteger({ amount: 1000, currency: Money.USD });
 var someDollars = Money.fromDecimal(15.25, 'USD');
+var someMoreDollars = Money.fromDecimalRounded(15.12345, 'USD', Math.ceil);
 
 // the following will fail and throw an Error since USD allows for 2 decimals
 var moreDollars = Money.fromDecimal(15.3456, Money.USD);
