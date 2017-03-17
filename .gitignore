@@ -2,3 +2,4 @@
 /node_modules/*
 /nbproject/
 /bower_components/*
+*.iml

@@ -42,6 +42,8 @@ var someDollars = Money.fromDecimal(15.25, 'USD');
 
 // the following will fail and throw an Error since USD allows for 2 decimals
 var moreDollars = Money.fromDecimal(15.3456, Money.USD);
+// but with rounder function provider the following will work
+var someMoreDollars = Money.fromDecimal(15.12345, 'USD', Math.ceil);
 ```
 
 The currency object hold the following properties
