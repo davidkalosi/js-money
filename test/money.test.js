@@ -37,9 +37,13 @@ describe('Money', function () {
     it('should create a new instance from decimal string using `.fromDecimal()`', function () {
         var money = Money.fromDecimal('10.01', Money.EUR);
         var money1 = Money.fromDecimal('10', Money.EUR);
+        var money3 = Money.fromDecimal(16.90, Money.EUR);
+        var money4 = Money.fromDecimal(16.95, Money.EUR);
 
         expect(money.amount).to.equal(1001);
         expect(money1.amount).to.equal(1000);
+        expect(money3.amount).to.equal(1690);
+        expect(money4.amount).to.equal(1695);
     });
 
     it('should not create a new instance from decimal using `.fromDecimal()` if too many decimal places', function () {
