@@ -342,4 +342,38 @@ describe('Money', function () {
 
         expect(minBitcoin.toDecimal()).to.equal(0.00000001)
     });
+
+    it('should return correct numeric code for currency', function () {
+        var eur = Money.EUR;
+        var usd = Money.USD;
+        var belarusRuble = Money.BYN;
+        var kzTenge = Money.KZT;
+
+        expect(eur.numericCode).to.equal('978');
+        expect(usd.numericCode).to.equal('840');
+        expect(belarusRuble.numericCode).to.equal('933');
+        expect(kzTenge.numericCode).to.equal('398');
+    });
+
+    it('changed currencies BYR, ZMK should return correctly', function () {
+        var changedCurrencies = {
+            BYR: 'BYN',
+            ZMK: 'ZMW'
+        }
+
+        expect(Money).to.not.have.property('BYR');
+        expect(Money).to.not.have.property('ZMK');
+        expect(Money[changedCurrencies['BYR']]).to.not.be.empty;
+        expect(Money[changedCurrencies['BYR']]).to.have.property('code').equal(changedCurrencies['BYR']);
+        expect(Money[changedCurrencies['ZMK']]).to.not.be.empty;
+        expect(Money[changedCurrencies['ZMK']]).to.have.property('code').equal(changedCurrencies['ZMK']);
+    });
+
+    it('out of circulation currencies EEK, LVL, LTL should not exist', function () {
+        var unusedCurrencies=['EEK', 'LVL', 'LTL'];
+
+        expect(Money).to.not.have.property(unusedCurrencies[0]);
+        expect(Money).to.not.have.property(unusedCurrencies[1]);
+        expect(Money).to.not.have.property(unusedCurrencies[2]);
+    });
 });
