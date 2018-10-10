@@ -342,4 +342,13 @@ describe('Money', function () {
 
         expect(minBitcoin.toDecimal()).to.equal(0.00000001)
     });
+
+    it('should create a new instance from decimal using `.fromDecimal()` for known values with floating point issue', function () {
+      var money = Money.fromDecimal('35.15', Money.EUR);
+      var money1 = Money.fromDecimal('20.01', Money.EUR);
+      expect(money.amount).to.equal(3515);
+      expect(money.currency).to.equal('EUR');
+      expect(money1.amount).to.equal(2001);
+      expect(money1.currency).to.equal('EUR');
+    });
 });
